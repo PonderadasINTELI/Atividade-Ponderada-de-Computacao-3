@@ -1,6 +1,6 @@
 {
   "name": "rssi-dashboard",
   "private": true,
-  "scripts": { "start": "node server.js" },
+  "scripts": { "start": "node server.js", "rede": "node server.js --rede" },
   "dependencies": { "chart.js": "4.4.4", "mqtt": "5.10.1" }
 }

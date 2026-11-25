@@ -1,0 +1,4 @@
+secrets.h
+node_modules/
+amostras-*.csv
+build/

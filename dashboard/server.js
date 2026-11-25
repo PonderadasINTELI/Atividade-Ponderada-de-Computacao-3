@@ -11,6 +11,7 @@ if (!cfg.MQTT_HOST || cfg.MQTT_HOST === 'PREENCHER') { console.error('Preencha M
 const CONDICOES = ['', 'Fora do metal (antes)', 'Dentro do metal', 'Fora do metal (depois)', 'Descoberta',
   'Coberta com as mãos', 'Vertical', 'Horizontal', 'Perto do roteador', 'Longe do roteador'];
 const PORTA = Number(process.env.PORT) || 3939;
+const AMOSTRAS = 5; // por condição, igual ao index.html; as seguintes não contam
 const SEM_DADOS_MS = 7000; // 3 leituras de 2 s perdidas = interrupção
 let csv;
 function novoCsv() {
@@ -65,6 +66,7 @@ cli.on('message', (_t, buf) => {
     } else if (d.modo === pedido) pedido = null;
     else if (pedido !== null) pedirModo();
   }
+  if (eventos.filter(e => e.condicao === medida).length >= AMOSTRAS) medida = '';
   registrar({ tipo: 'amostra', t, rssi: d.rssi, seq: Number(d.seq) || 0, condicao: medida });
   fs.appendFileSync(csv, `${new Date(t).toISOString()};${d.rssi};${Number(d.seq) || 0};${medida}\n`);
 });

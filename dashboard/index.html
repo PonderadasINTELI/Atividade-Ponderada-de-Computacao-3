@@ -125,7 +125,7 @@ const $ = id => document.getElementById(id);
 const hora = t => new Date(t).toLocaleTimeString('pt-BR');
 const GRUPOS = [['Recipiente metalizado', [1, 2, 3]], ['Mãos na antena', [4, 5]], ['Posição da antena', [6, 7]], ['Distância do roteador', [8, 9]]];
 const JANELAS = [['1 min', 60], ['5 min', 300], ['Tudo', 0]];
-const MIN_AMOSTRAS = 5;
+const AMOSTRAS = 5; // o server.js é quem limita
 const pontos = [];
 let faixas = [], stats = {}, conds = [], cond = '', broker = false, parado = false, porPainel = false, janela = 60, dif = 0;
 const agora = () => Date.now() + dif; // relógio do servidor, que carimba as amostras
@@ -243,7 +243,7 @@ function montar() {
     g.append(el('h2', '', titulo), linha);
     for (const i of ids) {
       const b = el('button', 'tile'), media = el('span', 'media'), det = el('span', 'det'), n = el('span', 'n');
-      const barra = Object.assign(document.createElement('progress'), { max: MIN_AMOSTRAS });
+      const barra = Object.assign(document.createElement('progress'), { max: AMOSTRAS });
       barra.setAttribute('aria-hidden', 'true');
       b.append(el('span', 'nome', conds[i]), media, det, barra, n);
       b.onclick = () => marcar(i);
@@ -261,15 +261,15 @@ function desenha() {
   $('guara').setAttribute('class', led);
   if (conds.length && !tiles.length) montar();
   $('trocando').setAttribute('aria-pressed', !cond);
-  $('modo').textContent = cond ? 'Registrando: ' + cond : 'Trocando: estas amostras não contam';
+  $('modo').textContent = cond ? (stats[cond]?.n >= AMOSTRAS ? 'Completo, pode avançar: ' : 'Registrando: ') + cond : 'Trocando: estas amostras não contam';
   for (const t of tiles) {
     const s = stats[t.nome], n = s ? s.n : 0;
     t.b.setAttribute('aria-pressed', t.nome === cond);
     t.media.textContent = s ? (s.soma / n).toFixed(1) + ' dBm' : '--';
     t.det.textContent = s ? `de ${s.min} a ${s.max}` : 'sem amostras';
-    t.barra.value = Math.min(n, MIN_AMOSTRAS);
-    t.n.textContent = n < MIN_AMOSTRAS ? `${n} de ${MIN_AMOSTRAS} amostras` : `✓ ${n} amostras`;
-    t.n.classList.toggle('pronto', n >= MIN_AMOSTRAS);
+    t.barra.value = n;
+    t.n.textContent = n < AMOSTRAS ? `${n} de ${AMOSTRAS} amostras` : `✓ ${n} amostras`;
+    t.n.classList.toggle('pronto', n >= AMOSTRAS);
   }
   deslizar();
 }

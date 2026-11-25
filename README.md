@@ -61,7 +61,7 @@ Abra http://localhost:3939. Para ver também no celular, use `npm run rede`: o d
 | Posição da antena | vertical, horizontal |
 | Distância do roteador | perto, longe |
 
-São as oito condições do enunciado, mais a volta ao estado inicial depois da blindagem. Cada uma precisa de pelo menos cinco amostras. Uma queda de conexão é registrada como resultado.
+São as oito condições do enunciado, mais a volta ao estado inicial depois da blindagem. Cada cartão guarda as cinco primeiras amostras. As seguintes aparecem em cinza no gráfico e não entram na média. Uma queda de conexão é registrada como resultado.
 
 ## ADR: escolhas diferentes do barema
 

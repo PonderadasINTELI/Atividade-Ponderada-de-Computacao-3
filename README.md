@@ -117,4 +117,4 @@ Consultei o professor, que dispensou o broker local e o Node-RED nesta entrega e
 - [x] Sketch do ESP32 em `rssi-wifi/`
 - [x] Dashboard em `dashboard/`
 - [x] ADR
-- [ ] Vídeo de 3 a 5 minutos, com acesso para qualquer pessoa com o link
+- [x] Vídeo de 5min45, com a duração liberada pelo professor: [pasta no Google Drive](https://drive.google.com/drive/folders/1uOmON77N0HpAwhNQOXEkJl8Xl1lYKowD?usp=sharing), com acesso para qualquer pessoa com o link
